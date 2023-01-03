@@ -1,12 +1,11 @@
 import { Route, redirect } from 'react-router-dom'
+import { LoginPage } from 'src/pages/LoginPage'
 
-const PrivateRoute = ({ children, ...rest }: any) => {
-
-  const auth = false
-
-  return (
-    <Route {... rest}>{children}</Route>
-  )
+const ProtectedRoute = ({ children, user }: any) => {
+  if (!user) {
+    return <LoginPage />
+  }
+  return children
 }
 
-export { PrivateRoute }
+export { ProtectedRoute }

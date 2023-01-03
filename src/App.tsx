@@ -1,8 +1,10 @@
 import React from 'react'
 import { HomePage } from './pages/HomePage'
 import { LoginPage } from './pages/LoginPage'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Header } from './components/Header'
+import { NotFoundPage } from './pages/NotFoundPage'
+import { ProtectedRoute } from './utils/PrivateRoute'
 
 import './App.css'
 
@@ -12,11 +14,11 @@ const App: React.FC<App> = () => {
   return (
     <div className="App">
       <Header />
-      <LoginPage />
-      {/* <Router>
-        <Route element={<HomePage />} path='/' />
-        <Route element={<LoginPage />} path='/login' />
-      </Router> */}
+      <Routes>
+        <Route path='/' element={<ProtectedRoute user={true}><HomePage /></ProtectedRoute> } />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
     </div>
   )
 }

@@ -12,7 +12,7 @@ const Header: React.FC<HeaderInterface> = () => {
           <span> | </span>
       {
         !username
-          ? <Link to='/login'>Login</Link>
+          ? <Link to={'/login'}>Login</Link>
           : <Link to={'/logout'}>Logout</Link>
       }
       {
