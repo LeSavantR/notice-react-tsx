@@ -1,19 +1,20 @@
-const loginService = async ({ username, password}: any) => {
-  const req = await fetch('http://localhost:8000/api/token/', {
-      method: 'POST',
+import { AuthLinks, RequestMethod, HeadersTypes, TokenModel, authorization } from "@/models"
+
+
+const loginService = async ({ username, password, setError, setLoading}: any) => {
+  setLoading(true)
+  const req = await fetch(AuthLinks.LOGIN, {
+      method: RequestMethod.POST,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': HeadersTypes.CONTENT_TYPE_VALUE
       },
       body: JSON.stringify({username, password})
     })
 
-    const data = await req.json()
-    if (req.status === 200) {
-      return data
-    } else {
-      console.log('Something went Wrong')
-    }
+    const data: TokenModel = await req.json()
+    if (req.status !== 200 ) setError(req.statusText)
+    setLoading(false)
+    return data
 }
-
 
 export { loginService }

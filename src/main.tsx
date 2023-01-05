@@ -6,9 +6,9 @@ import { AuthProvider } from './context/AuthProvider'
 import App from './App'
 
 const element = document.getElementById('root') as HTMLElement
-const react = ReactDOM.createRoot(element)
+const dom = ReactDOM.createRoot(element)
 
-react.render(
+dom.render(
   <BrowserRouter>
     <AuthProvider>
       <App />

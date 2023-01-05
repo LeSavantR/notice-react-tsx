@@ -1,15 +1,15 @@
+import { AuthContext } from '@/context/AuthContext'
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../context/AuthContext'
 
 export interface HeaderInterface {}
 
-const Header: React.FC<HeaderInterface> = () => {
+const Header : React.FC<HeaderInterface> = () => {
   const { username } = useContext(AuthContext)
   return (
     <header>
       <Link to='/'>Home</Link>
-          <span> | </span>
+      <span> | </span>
       {
         !username
           ? <Link to={'/login'}>Login</Link>
@@ -22,4 +22,4 @@ const Header: React.FC<HeaderInterface> = () => {
   )
 }
 
-export { Header }
+export default Header

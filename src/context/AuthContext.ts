@@ -1,12 +1,9 @@
+import { TokenModel, UserPayloadModel } from "@/models"
 import { createContext } from "react"
 
 export interface AuthContextInterface {
-  username?: string
-  access?: {
-    token?: string
-    refresh?: string
-  }
-  loginUser?: any
+  user?: UserPayloadModel | undefined
+  authToken?: TokenModel
 }
 
 const AuthContext = createContext<AuthContextInterface>({})

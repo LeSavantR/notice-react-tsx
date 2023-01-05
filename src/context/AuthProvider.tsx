@@ -1,37 +1,34 @@
 import React, { useState, useEffect } from "react"
-import { AuthContext, AuthContextInterface } from "./AuthContext"
+import { AuthContext } from "./AuthContext"
+import { InitialAuthToken, UserPayloadModel } from "@/models"
+import { loginService } from "@/Providers"
+import { decodeTokenAdapter } from "@/utilities"
 
 
 export interface AuthProviderInterface {
-  children?: React.ReactNode
+  children: React.ReactNode
 }
 
 const AuthProvider: React.FC<AuthProviderInterface> = ({children}) => {
-  const [ authToken, setAuthToken ] = useState({})
-  const [ user, setUser ] = useState<AuthContextInterface>()
+  const [ error, setError ] = useState(false)
+  const [ loading, setLoading ] = useState(true)
+  const [ authToken, setAuthToken ] = useState(InitialAuthToken)
+  const [ user, setUser ] = useState<UserPayloadModel>()
 
-  const loginUser = async ({ username, password}: any) => {
-    const req = await fetch('http://localhost:8000/api/token/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username, password})
-    })
-
-    const data = await req.json()
-    if (req.status === 200) {
-      setAuthToken(data)
-      setUser(data.access)
-    } else {
-      console.log('Something went Wrong')
+  useEffect(() => {
+    const loginUser = async () => {
+      const { access, refresh } = await loginService({setError, setLoading})
+      setUser(decodeTokenAdapter(access))
+      setAuthToken({ access, refresh })
     }
-    console.log(data)
-  }
+    loginUser()
+  }, [])
 
   const contextData = {
-    loginUser,
-    access: authToken
+    authToken,
+    error,
+    loading,
+    user,
   }
 
   return (
