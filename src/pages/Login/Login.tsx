@@ -1,45 +1,51 @@
 import React, { useContext, useState } from 'react'
-import { AuthContext } from '@/context/AuthContext'
+
+import { LoginProvided } from '@/providers'
+import { userContext } from '@/context'
+import { userContextType } from '@/models'
 
 export interface LoginInterface {}
-type EventInput = React.FormEvent<HTMLInputElement>
-type Values = {
-  username?: string,
-  password?: string
+export type EventInput = React.FormEvent<HTMLInputElement>
+export type Values = {
+  email: string,
+  password: string
 }
 
 
 const Login : React.FC<LoginInterface> = () => {
-  const [values, setValues] = useState<Values>({})
-  const { username, loginUser } = useContext(AuthContext)
+  const context = useContext(userContext) as userContextType
+  const [ values, setValues ] = useState<Values>({
+    email: '',
+    password: ''
+  })
 
-  const handleChange = (event: EventInput) => {
-    const { currentTarget } = event
+  const handleChange = ({ currentTarget }: EventInput) => {
     setValues({ ...values, [currentTarget.name]: currentTarget.value })
   }
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-    loginUser({ username: values.username, password: values.password })
+    LoginProvided(values, context).then(value => value)
   }
+
   return (
     <>
       <form onSubmit={handleSubmit}>
         <input
           onChange={handleChange}
-          value={values.username}
+          value={values.email}
           type="text"
-          name='username'
-          placeholder='Enter Username'
+          name='email'
+          placeholder='Enter email....'
         />
         <input
           onChange={handleChange}
           value={values.password}
           type="password"
           name='password'
-          placeholder='Enter Password'
+          placeholder='Enter Password....'
         />
-        <input type="submit" value="submit" />
+        <input type="submit" value="Login" />
       </form>
     </>
   );

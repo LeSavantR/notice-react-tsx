@@ -1,4 +1,4 @@
-export interface Comment {
+interface Comment {
   id: number
   usuario_crea_id: string
   fecha_crea: string
@@ -7,7 +7,7 @@ export interface Comment {
   coment: string
 }
 
-export interface NoticiaInterface {
+interface NoticiaInterface {
   id: number
   usuario_crea_id: string
   fecha_crea: string
@@ -17,14 +17,19 @@ export interface NoticiaInterface {
   comments: Comment[]
 }
 
-export interface NoticiaForm {
+interface NoticiaForm {
   titulo: string
   descripcion: string
 }
 
-export interface NoticiaRequest {
+interface NoticiaRequest {
   count: number
   next: string | null
   previous: string | null
   results: NoticiaInterface[] | undefined
+}
+
+export {
+  Comment, NoticiaInterface,
+  NoticiaForm, NoticiaRequest
 }

@@ -1,17 +1,17 @@
 const BASE_URL = 'http://localhost:8000/api/'
 const NOTICIAS = 'noticia/'
 
-export const noticiaLinks = (id?: string | undefined) => {
+const noticiaLinks = (id?: string | undefined) => {
   if (id === undefined) return `${BASE_URL}${NOTICIAS}`
   return `${BASE_URL}${NOTICIAS}${id}/`
 }
 
-export enum AuthLinks {
+enum AuthLinks {
   LOGIN = `${BASE_URL}token/`,
   REFRESH = `${BASE_URL}token/refresh/`
 }
 
-export enum RequestMethod {
+enum RequestMethod {
   GET = 'GET',
   POST = 'POST',
   PATCH = 'PATCH',
@@ -19,13 +19,19 @@ export enum RequestMethod {
   DELETE = 'DELETE'
 }
 
-export enum HeadersTypes {
+enum HeadersTypes {
   CONTENT_TYPE_VALUE = 'application/json',
 }
 
-export const authorization = (token: string) => `Bearer ${token}`
+const authorization = (token: string) => `Bearer ${token}`
 
-export const InitialAuthToken = {
+const InitialAuthToken = {
   access: '',
   refresh: ''
+}
+
+export {
+  noticiaLinks, AuthLinks,
+  RequestMethod, HeadersTypes,
+  authorization, InitialAuthToken
 }

@@ -1,12 +1,20 @@
-export const setLocalStorage = (key: string, value: any) => {
+import { TokenModel } from "@/models"
+
+const setLocalStorage = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(value))
 }
 
-export const getLocalStorage = (key: string) => {
+const getLocalStorage = (key: string) => {
   const get = localStorage.getItem(key)
   if (!get) {
-    return null
+    return undefined
   } else {
-    return get
+    return JSON.parse(get) as TokenModel
   }
 }
+
+const removeLocalStorage = (key: string) => {
+  localStorage.removeItem(key)
+}
+
+export { setLocalStorage, getLocalStorage, removeLocalStorage }
