@@ -8,7 +8,7 @@ import { decodeTokenAdapter, getLocalStorage } from '@/utilities'
 import { ContextTypes, userContextType } from '@/models'
 import { userContext } from '@/context'
 
-interface App {}
+interface App { }
 
 const App: React.FC<App> = () => {
 
@@ -27,7 +27,7 @@ const App: React.FC<App> = () => {
     <>
       <Header />
       <Routes>
-        <Route index path='/' element={<RequiredAuth user={user}><Home /></RequiredAuth> } />
+        <Route index path='/' element={<RequiredAuth user={user}><Home /></RequiredAuth>} />
         <Route path='/login' element={<Login />} />
         <Route path='/notice/:idNotice' element={<RequiredAuth><Notice /></RequiredAuth>} />
         <Route path='*' element={<Error />} />
@@ -36,4 +36,4 @@ const App: React.FC<App> = () => {
   )
 }
 
-export default App
+export { App }
