@@ -8,7 +8,7 @@ import { decodeTokenAdapter, getLocalStorage } from '@/utilities'
 import { ContextTypes, userContextType } from '@/models'
 import { userContext } from '@/context'
 
-interface App { }
+interface App {}
 
 const App: React.FC<App> = () => {
 
