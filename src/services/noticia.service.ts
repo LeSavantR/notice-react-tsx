@@ -11,7 +11,7 @@ const getAllNotices = async () => {
   return data as NoticiaRequest
 }
 
-const getNoticie = async ({ id }: NoticiaInterface) => {
+const getNoticie = async (id: string) => {
   const token = getLocalStorage(ContextTypes.AUTHUSER)
   if (!token) return []
   const { data } = await axios.get(noticiaLinks(`${id}`), config(token))
@@ -32,7 +32,7 @@ const updateNotice = async ( notice: NoticiaForm) => {
   return data as NoticiaInterface
 }
 
-const deleteNotice = async ({ id }: NoticiaInterface) => {
+const deleteNotice = async (id: string) => {
   const token = getLocalStorage(ContextTypes.AUTHUSER)
   if (!token) return []
   const { status } = await axios.delete(noticiaLinks(`${id}`), config(token))

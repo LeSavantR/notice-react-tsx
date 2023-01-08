@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { LoginProvided } from '@/providers'
 import { userContext } from '@/context'
 import { userContextType } from '@/models'
+import { useNavigate } from 'react-router-dom'
 
 export interface LoginInterface {}
 export type EventInput = React.FormEvent<HTMLInputElement>
@@ -13,11 +14,14 @@ export type Values = {
 
 
 const Login : React.FC<LoginInterface> = () => {
+
   const context = useContext(userContext) as userContextType
   const [ values, setValues ] = useState<Values>({
     email: '',
     password: ''
   })
+
+  const location = useNavigate()
 
   const handleChange = ({ currentTarget }: EventInput) => {
     setValues({ ...values, [currentTarget.name]: currentTarget.value })
@@ -25,7 +29,9 @@ const Login : React.FC<LoginInterface> = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-    LoginProvided(values, context).then(value => value)
+    LoginProvided(values, context).then(value => {
+      if (value){location('/')}
+    })
   }
 
   return (

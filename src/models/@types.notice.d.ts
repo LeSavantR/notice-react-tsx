@@ -1,6 +1,6 @@
 interface Comment {
   id: number
-  usuario_crea_id: string
+  usuario_crea: string
   fecha_crea: string
   fecha_modifica: string
   noticia_id: string
@@ -9,12 +9,12 @@ interface Comment {
 
 interface NoticiaInterface {
   id: number
-  usuario_crea_id: string
+  usuario_crea: string
   fecha_crea: string
   fecha_modifica: string
   titulo: string
   descripcion: string
-  comments: Comment[]
+  coments: Comment[]
 }
 
 interface NoticiaForm {
@@ -26,7 +26,7 @@ interface NoticiaRequest {
   count: number
   next: string | null
   previous: string | null
-  results: NoticiaInterface[] | undefined
+  results: NoticiaInterface[]
 }
 
 export {

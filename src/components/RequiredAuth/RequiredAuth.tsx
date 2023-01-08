@@ -1,6 +1,7 @@
 import { UserPayloadModel } from '@/models'
 import { Login } from '@/pages'
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 
 export interface RequiredAuthInterface {
   children: React.ReactNode
@@ -9,7 +10,7 @@ export interface RequiredAuthInterface {
 
 const RequiredAuth: React.FC<RequiredAuthInterface> = ({ children, user }) => {
   if (!user) {
-    return <Login />
+    return <Navigate to={'/login'} replace />
   }
   return (
     <>

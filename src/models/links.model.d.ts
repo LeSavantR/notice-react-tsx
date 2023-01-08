@@ -1,14 +1,15 @@
 const BASE_URL = 'http://localhost:8000/api/'
+const VERSION = 'v1/'
 const NOTICIAS = 'noticia/'
 
 const noticiaLinks = (id?: string | undefined) => {
-  if (id === undefined) return `${BASE_URL}${NOTICIAS}`
-  return `${BASE_URL}${NOTICIAS}${id}/`
+  if (id === undefined) return `${BASE_URL}${VERSION}${NOTICIAS}`
+  return `${BASE_URL}${VERSION}${NOTICIAS}${id}/`
 }
 
-enum AuthLinks {
-  LOGIN = `${BASE_URL}token/`,
-  REFRESH = `${BASE_URL}token/refresh/`
+const AuthLinks = {
+  LOGIN:`${BASE_URL}token/`,
+  REFRESH:`${BASE_URL}token/refresh/`
 }
 
 enum RequestMethod {

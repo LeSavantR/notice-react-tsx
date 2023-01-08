@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import './App.css'
-import { Header } from './components'
-import { Home, Login, Error } from './pages'
-import { RequiredAuth } from './components/RequiredAuth'
-import { decodeTokenAdapter, getLocalStorage } from './utilities'
-import { ContextTypes, userContextType } from './models'
-import { userContext } from './context'
+import { Header } from '@/components'
+import { Home, Login, Error, Notice } from '@/pages'
+import { RequiredAuth } from '@/components'
+import { decodeTokenAdapter, getLocalStorage } from '@/utilities'
+import { ContextTypes, userContextType } from '@/models'
+import { userContext } from '@/context'
 
 interface App {}
 
@@ -28,8 +27,9 @@ const App: React.FC<App> = () => {
     <>
       <Header />
       <Routes>
-        <Route path='/' element={<RequiredAuth user={user}><Home /></RequiredAuth> } />
+        <Route index path='/' element={<RequiredAuth user={user}><Home /></RequiredAuth> } />
         <Route path='/login' element={<Login />} />
+        <Route path='/notice/:idNotice' element={<RequiredAuth><Notice /></RequiredAuth>} />
         <Route path='*' element={<Error />} />
       </Routes>
     </>
