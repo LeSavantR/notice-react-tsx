@@ -4,15 +4,17 @@ import axios from "axios"
 
 type LoginState = UserCredentials | undefined
 
-export const getLoginService = async (credentials: LoginState) => {
+const getLoginService = async (credentials: LoginState) => {
   if (!credentials) return undefined
   const { data, status } = await axios.post(AuthLinks.LOGIN, credentials)
   if (status === 200 ) setLocalStorage(ContextTypes.AUTHUSER, data)
   return await data as TokenModel
 }
 
-export const getRefreshToken = async ({ access, refresh}:TokenModel) => {
+const getRefreshToken = async ({ refresh }:TokenModel) => {
   const { data, status } = await axios.post(AuthLinks.REFRESH, { refresh })
   if (status === 200) setLocalStorage(ContextTypes.AUTHUSER, data)
   return await data as TokenModel
 }
+
+export { getLoginService, getRefreshToken }

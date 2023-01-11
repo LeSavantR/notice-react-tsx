@@ -21,6 +21,8 @@ const Login : React.FC<LoginInterface> = () => {
     password: ''
   })
 
+  const {  } = context
+
   const location = useNavigate()
 
   const handleChange = ({ currentTarget }: EventInput) => {
@@ -30,7 +32,7 @@ const Login : React.FC<LoginInterface> = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     LoginProvided(values, context).then(value => {
-      if (value){location('/')}
+      if (value) {location('/')}
     })
   }
 

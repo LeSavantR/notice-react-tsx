@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  flex-direction: row;
+}
+
+.error {
+  display: block;
+  text-align: center;
+  max-height: fit-content;
+}
+
+.message {
+  font-weight: bold;
+  color: red;
+}
