@@ -8,9 +8,9 @@ import { decodeTokenAdapter, getLocalStorage } from '@/utilities'
 import { ContextTypes, userContextType } from '@/models'
 import { userContext } from '@/context'
 
-interface App {}
+interface AppInterface {}
 
-const App: React.FC<App> = () => {
+const App: React.FC<AppInterface> = () => {
 
   const { user, setUser, setLoading } = useContext(userContext) as userContextType
 
