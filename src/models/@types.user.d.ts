@@ -22,6 +22,7 @@ interface TokenDecodeModel {
   user_id: string
   email: string
   nombre_completo: string
+  is_staff: boolean
 }
 
 interface UserPayloadModel {
@@ -29,6 +30,7 @@ interface UserPayloadModel {
   refresh: string
   email: string
   nombre_completo: string
+  is_staff: boolean
 }
 
 interface UserCredentials {

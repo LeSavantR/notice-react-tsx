@@ -4,9 +4,10 @@ import { Route, Routes } from 'react-router-dom'
 import { Header } from '@/components'
 import { Home, Login, Error, Notice } from '@/pages'
 import { RequiredAuth } from '@/components'
-import { decodeTokenAdapter, getLocalStorage } from '@/utilities'
-import { ContextTypes, userContextType } from '@/models'
+import { decodeTokenAdapter, getLocalStorageUser } from '@/utilities'
+import { ContextTypes, TokenModel, userContextType } from '@/models'
 import { userContext } from '@/context'
+import { EmptyUserState } from '@/redux'
 
 interface AppInterface {}
 
@@ -16,7 +17,7 @@ const App: React.FC<AppInterface> = () => {
 
   useEffect(() => {
     setLoading(true)
-    const token = getLocalStorage(ContextTypes.AUTHUSER)
+    const token = getLocalStorageUser<TokenModel>(ContextTypes.AUTHUSER, EmptyUserState)
     if (token) {
       setUser(decodeTokenAdapter(token))
       setLoading(false)
@@ -36,4 +37,4 @@ const App: React.FC<AppInterface> = () => {
   )
 }
 
-export { App }
+export default App
