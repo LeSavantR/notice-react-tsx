@@ -1,20 +1,23 @@
-import React, { useContext, useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { Suspense, lazy, useContext, useEffect } from 'react'
+import { Route } from 'react-router-dom'
 
-import { Header } from '@/components'
-import { Home, Login, Error, Notice } from '@/pages'
+import { Header, RoutesNotFound } from '@/components'
 import { RequiredAuth } from '@/components'
 import { decodeTokenAdapter, getLocalStorageUser } from '@/utilities'
 import { ContextTypes, TokenModel, userContextType } from '@/models'
 import { userContext } from '@/context'
 import { EmptyUserState } from '@/redux'
+import { AuthGuard } from '@/auth'
+
+const Loading = lazy(() => import('@/components/Loading/Loading'))
+const Home = lazy(() => import('@/pages/Home/Home'))
+const Login = lazy(() => import('@/pages/Login/Login'))
+const Notice = lazy(() => import('@/pages/Notice/Notice'))
 
 interface AppInterface {}
 
 const App: React.FC<AppInterface> = () => {
-
   const { user, setUser, setLoading } = useContext(userContext) as userContextType
-
   useEffect(() => {
     setLoading(true)
     const token = getLocalStorageUser<TokenModel>(ContextTypes.AUTHUSER, EmptyUserState)
@@ -25,15 +28,16 @@ const App: React.FC<AppInterface> = () => {
   }, [])
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <Header />
-      <Routes>
-        <Route index path='/' element={<RequiredAuth user={user}><Home /></RequiredAuth>} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/notice/:idNotice' element={<RequiredAuth><Notice /></RequiredAuth>} />
-        <Route path='*' element={<Error />} />
-      </Routes>
-    </>
+      <RoutesNotFound>
+        <Route index path={'/'} element={<RequiredAuth user={user}><Home /></RequiredAuth>} />
+        <Route path={'/login'} element={<Login />} />
+        <Route element={<AuthGuard />}>
+          <Route path={`${noticeRoutes.NOTICE}/*`} element={<Notice />} />
+        </Route>
+      </RoutesNotFound>
+    </Suspense>
   )
 }
 
