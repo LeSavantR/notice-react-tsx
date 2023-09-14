@@ -3,9 +3,9 @@ import jwtDecode from "jwt-decode"
 import { TokenModel } from '@/models'
 import { TokenDecodeModel, UserPayloadModel } from "@/models"
 
-const decodeTokenAdapter = (decode: TokenModel | undefined) => {
+const decodeTokenAdapter = (decode: TokenModel) => {
   // Separar este interceptor
-  if (decode === undefined) return undefined
+  // if (decode === undefined) return undefined
   const tokenDecode: TokenDecodeModel = jwtDecode(decode?.access)
 
   const { access, refresh } = decode

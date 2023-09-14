@@ -3,3 +3,5 @@ const noticeRoutes = {
   NOTICEID: ':idNotice',
   COMMENTS: 'comments'
 }
+
+export { noticeRoutes }

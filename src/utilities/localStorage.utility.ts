@@ -1,6 +1,4 @@
-import { TokenModel } from "@/models"
-
-const setLocalStorage = (key: string, value: any) => {
+const setLocalStorage = <T> (key: string, value: T) => {
   localStorage.setItem(key, JSON.stringify(value))
 }
 
@@ -8,20 +6,17 @@ const persistLocalStorage = <T> (key: string, value: T) => {
   localStorage.setItem(key, JSON.stringify({...value}))
 }
 
-const getLocalStorage = (key: string) => {
-  const get = localStorage.getItem(key)
-  if (!get) {
-    return undefined
-  } else {
-    return JSON.parse(get) as TokenModel
-  }
+const tryGet = (key: string) => {
+  if (localStorage.getItem(key) !== null) return true
+  return false
 }
 
-const getLocalStorageUser = <T> (key: string, initialValue: T) => {
-  if (localStorage.getItem(key)) {
+const getLocalStorageData = <T> (key:  string, initialStateData: T) => {
+  if(tryGet(key)) {
     return JSON.parse(localStorage.getItem(key) as string) as T
   } else {
-    return initialValue
+    setLocalStorage<T>(key, initialStateData)
+    return JSON.parse(localStorage.getItem(key) as string) as T
   }
 }
 
@@ -29,4 +24,8 @@ const removeLocalStorage = (key: string) => {
   localStorage.removeItem(key)
 }
 
-export { persistLocalStorage, removeLocalStorage, getLocalStorageUser }
+export {
+  getLocalStorageData, persistLocalStorage,
+  removeLocalStorage, setLocalStorage
+}
+

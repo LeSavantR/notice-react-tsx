@@ -10,12 +10,12 @@ const Notice : React.FC<NoticeInterface> = () => {
   const [ notice, setNotice ] = useState<NoticiaInterface | undefined>()
   const [ fechaOne, setFechaOne ] = useState('')
   const [ fechaTwo, setFechaTwo ] = useState('')
-  const { idNotice='' } = useParams()
+  const { idNotice = '' } = useParams()
   const location = useNavigate()
 
   useEffect(() => {
     const fetchNotice = async () => {
-      const data = await getNoticie(idNotice) as NoticiaInterface
+      const data = await getNoticie(idNotice)
       const { fecha_crea, fecha_modifica } = data
       const fechaUno = new Date(fecha_crea)
       const fechaDos = new Date(fecha_modifica)

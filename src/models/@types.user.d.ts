@@ -1,6 +1,8 @@
 interface userContextType {
-  user: UserPayloadModel | undefined
-  setUser: (user: UserPayloadModel | undefined) => void
+  user: UserPayloadModel
+  setUser: (user: UserPayloadModel) => void
+  isLogged: boolean
+  setIsLogged: (state: boolean) => void
   loading: boolean
   setLoading: (state: boolean) => void
   error: boolean
@@ -30,7 +32,7 @@ interface UserPayloadModel {
   refresh: string
   email: string
   nombre_completo: string
-  is_staff: boolean
+  // is_staff: boolean
 }
 
 interface UserCredentials {

@@ -1,26 +1,26 @@
 import { useContext } from 'react';
-import { UserCredentials, userContextType } from "@/models"
+import { UserCredentials, UserPayloadModel, initialStateUserPayloadModel } from "@/models"
 import { getLoginService } from "@/services"
 import { decodeTokenAdapter } from "@/utilities"
 import { userContext } from './user.provider';
 
 
-const LoginProvided = (credentials: UserCredentials, { setUser }: userContextType) => {
+const LoginProvided = (credentials: UserCredentials) => {
 
-  const { setError, setLoading, setErrorMessage } = useContext(userContext) as userContextType
+  const { setError, setUser, setLoading, setErrorMessage } = useContext(userContext)
 
   const logging = async () => {
     setLoading(true)
-    try {
-      const token = await getLoginService(credentials)
+    const token = await getLoginService(credentials)
+    if (token.access !== '') {
       const userLogged = decodeTokenAdapter(token)
       setUser(userLogged)
       setLoading(false)
       return true
-    } catch (error) {
-      setUser(undefined)
+    } else {
+      setUser(initialStateUserPayloadModel)
       setError(true)
-      setErrorMessage(`${error}`)
+      setErrorMessage(`Sin Acceso`)
       setLoading(false)
       return false
     }

@@ -1,5 +1,6 @@
 enum ContextTypes {
-  AUTHUSER = 'AuthNoticeProvider'
+  AUTHUSER = 'AuthNoticeProvider',
+  AUTHTOKEN = 'AuthTokenProvider'
 }
 
 const Contextinitial = {

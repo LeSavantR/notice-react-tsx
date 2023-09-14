@@ -22,7 +22,7 @@ interface NoticiaForm {
   descripcion: string
 }
 
-interface NoticiaRequest {
+interface NoticiaRequestAll {
   count: number
   next: string | null
   previous: string | null
@@ -31,5 +31,5 @@ interface NoticiaRequest {
 
 export {
   Comment, NoticiaInterface,
-  NoticiaForm, NoticiaRequest
+  NoticiaForm, NoticiaRequestAll
 }

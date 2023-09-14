@@ -6,8 +6,7 @@ const EmptyUserState: UserPayloadModel = {
   access: '',
   refresh: '',
   email: '',
-  nombre_completo: '',
-  is_staff: false
+  nombre_completo: ''
 }
 
 const userKey = 'user'

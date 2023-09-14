@@ -1,5 +1,5 @@
 import { NoticeList } from '@/components';
-import { NoticiaInterface, NoticiaRequest } from '@/models';
+import { NoticiaInterface } from '@/models';
 import { getAllNotices } from '@/services';
 import React, { useEffect, useState } from 'react';
 export interface HomeInterface {}
@@ -10,11 +10,11 @@ const Home : React.FC<HomeInterface> = () => {
 
   useEffect(() => {
     const fetching = async () => {
-      const { results, count } = await getAllNotices() as NoticiaRequest
+      const { results, count } = await getAllNotices()
       setTotal(count)
       setAllNotices(results)
     }
-    fetching()
+    fetching().then()
   }, [])
 
   return (

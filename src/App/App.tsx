@@ -1,13 +1,16 @@
-import React, { Suspense, lazy, useContext, useEffect } from 'react'
+import React, {
+  Suspense, lazy, useContext, useEffect
+} from 'react'
 import { Route } from 'react-router-dom'
 
-import { Header, RoutesNotFound } from '@/components'
-import { RequiredAuth } from '@/components'
-import { decodeTokenAdapter, getLocalStorageUser } from '@/utilities'
-import { ContextTypes, TokenModel, userContextType } from '@/models'
-import { userContext } from '@/context'
-import { EmptyUserState } from '@/redux'
 import { AuthGuard } from '@/auth'
+import {
+  Header, RequiredAuth,
+  RoutesNotFound
+} from '@/components'
+import { userContext } from '@/context'
+import { ContextTypes, initialStateToken, initialStateUserPayloadModel, noticeRoutes } from '@/models'
+import { decodeTokenAdapter, getLocalStorageData } from '@/utilities'
 
 const Loading = lazy(() => import('@/components/Loading/Loading'))
 const Home = lazy(() => import('@/pages/Home/Home'))
@@ -17,12 +20,18 @@ const Notice = lazy(() => import('@/pages/Notice/Notice'))
 interface AppInterface {}
 
 const App: React.FC<AppInterface> = () => {
-  const { user, setUser, setLoading } = useContext(userContext) as userContextType
+  const { setUser, setIsLogged, setLoading, isLogged } = useContext(userContext)
   useEffect(() => {
     setLoading(true)
-    const token = getLocalStorageUser<TokenModel>(ContextTypes.AUTHUSER, EmptyUserState)
-    if (token) {
+    setIsLogged(false)
+    const token = getLocalStorageData(ContextTypes.AUTHTOKEN, initialStateToken)
+    if (token.access !== '') {
+      setIsLogged(true)
       setUser(decodeTokenAdapter(token))
+      setLoading(false)
+    } else {
+      setUser(initialStateUserPayloadModel)
+      setIsLogged(false)
       setLoading(false)
     }
   }, [])
@@ -31,9 +40,9 @@ const App: React.FC<AppInterface> = () => {
     <Suspense fallback={<Loading />}>
       <Header />
       <RoutesNotFound>
-        <Route index path={'/'} element={<RequiredAuth user={user}><Home /></RequiredAuth>} />
+        <Route index path={'/'} element={<RequiredAuth isLogged={isLogged}><Home /></RequiredAuth>} />
         <Route path={'/login'} element={<Login />} />
-        <Route element={<AuthGuard />}>
+        <Route element={<AuthGuard isLogged={isLogged} />}>
           <Route path={`${noticeRoutes.NOTICE}/*`} element={<Notice />} />
         </Route>
       </RoutesNotFound>

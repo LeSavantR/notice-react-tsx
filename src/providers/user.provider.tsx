@@ -1,27 +1,38 @@
-import React, { useState } from 'react'
-import { UserPayloadModel } from '@/models'
+import React from 'react'
+import { UserPayloadModel, initialStateUserPayloadModel, userContextType } from '@/models'
 import { userContext } from '@/context'
 
 interface UserProviderInterface {
   children: React.ReactNode
 }
 
+let initialUser: userContextType
+
 const UserProvider: React.FC<UserProviderInterface> = ({ children }) => {
-  const [ user, setUser ] = useState<UserPayloadModel | undefined>(undefined)
-  const [ error, setError ] = useState(false)
-  const [ errorMessage, setErrorMessage ] = useState('')
-  const [ loading, setLoading ] = useState(true)
-  const contextValue = {
-    user, setUser,
-    error, setError,
-    errorMessage, setErrorMessage,
-    loading, setLoading
+  const initialUserProvider = () => {
+    const [user, setUser] = React.useState<UserPayloadModel>(initialStateUserPayloadModel)
+    const [error, setError] = React.useState(false)
+    const [errorMessage, setErrorMessage] = React.useState('')
+    const [loading, setLoading] = React.useState(true)
+    const [isLogged, setIsLogged] = React.useState(false)
+
+    const contextValue: userContextType = {
+      user, setUser,
+      isLogged, setIsLogged,
+      error, setError,
+      errorMessage, setErrorMessage,
+      loading, setLoading
+    }
+    return contextValue
   }
+
+  const values = initialUserProvider()
+  initialUser = values
   return (
-    <userContext.Provider value={contextValue}>
+    <userContext.Provider value={values}>
       { children }
     </userContext.Provider>
   )
 }
 
-export { UserProvider, userContext }
+export { UserProvider, userContext, initialUser }

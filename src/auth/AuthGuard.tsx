@@ -1,14 +1,13 @@
 import React from 'react'
-import { AppStore } from '@/redux'
-import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 
-interface AuthGuardInterface {}
+interface AuthGuardInterface {
+  isLogged: boolean
+}
 
-const AuthGuard: React.FC<AuthGuardInterface> = () => {
-  const userState = useSelector((store: AppStore) => store.user)
+const AuthGuard: React.FC<AuthGuardInterface> = ({ isLogged }) => {
   return (
-    userState.access
+    !!isLogged
       ? <Outlet />
       : <Navigate replace to={'/login'} />
   )
